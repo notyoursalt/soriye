@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Sorryye | Generator Surat Pengunduran Diri Resmi</title>
+  <meta name="description" content="Buat surat pengunduran diri resmi, rapi, dan siap cetak dalam 3 tahap. Pas 1 lembar A4, bebas watermark, dan privasi aman.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+  <!-- Site Navigation Header -->
+  <header class="site-header" id="siteHeader">
+    <div class="nav-container">
+      <a href="#home" class="brand-logo" id="navBrandLogo" aria-label="Beranda Sorryye">
+        <img src="assets/logo.png" alt="Sorryye Logo">
+      </a>
+
+      <div class="nav-actions">
+        <button class="btn-primary btn-nav-cta" id="btnNavCreate">
+          <span>Buat Surat Resign</span>
+          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==============================================
+       VIEW 1: LANDING PAGE (Full-Width Cinematic Video Stage)
+  ============================================== -->
+  <main class="app-view active hero-fullwidth-view" id="landingView">
+    
+    <!-- Full-Width Background Video -->
+    <video 
+      id="heroFullVideo"
+      autoplay 
+      muted 
+      loop 
+      playsinline 
+      preload="auto"
+      disablepictureinpicture
+      class="hero-fullwidth-video">
+      <source src="assets/new.mp4" type="video/mp4">
+    </video>
+
+    <!-- Floating Left Content (In the natural left negative space) -->
+    <div class="hero-fullwidth-overlay">
+      <div class="hero-overlay-inner">
+        <div class="hero-left-content">
+          <div class="hero-badge-pill">
+            <span class="badge-dot"></span>
+            <span>Generator Surat Resign Resmi</span>
+          </div>
+
+          <h1 class="hero-main-title">
+            Surat Pengunduran Diri Resmi, <br>
+            <span class="highlight">Rapi, dan Siap Cetak.</span>
+          </h1>
+
+          <p class="hero-main-desc">
+            Selesaikan proses pembuatan surat secara profesional, cepat, dan terstandar. Bubuhkan tanda tangan digital langsung di layar, lalu unduh dokumen PDF 1 lembar A4 siap cetak tanpa watermark.
+          </p>
+
+          <div class="hero-action-row">
+            <button class="btn-primary btn-hero-cta" id="btnHeroCreate">
+              <span>Mulai Buat Surat</span>
+              <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+            </button>
+          </div>
+
+          <div class="hero-feature-tags">
+            <span class="feature-tag">
+              <svg class="svg-icon" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+              <span>Standar HRD Resmi</span>
+            </span>
+            <span class="feature-tag">
+              <svg class="svg-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+              <span>Tanda Tangan Digital</span>
+            </span>
+            <span class="feature-tag">
+              <svg class="svg-icon" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+              <span>Ekspor PDF A4</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ==============================================
+       VIEW 2: GENERATOR / BUILDER WORKSPACE (3 TAHAP)
+  ============================================== -->
+  <main class="app-view builder-view" id="builderView">
+    
+    <div class="builder-header">
+      <div class="builder-header-left">
+        <button class="btn-small btn-back" id="btnBackToHome">
+          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+          <span>Kembali</span>
+        </button>
+        <div>
+          <h1 class="builder-main-title">Editor Surat Resign</h1>
+          <p class="builder-main-subtitle">Lengkapi 3 tahap di bawah. Hasil diperbarui otomatis pada pratinjau 1 lembar A4.</p>
+        </div>
+      </div>
+
+      <div class="builder-header-actions">
+        <button class="btn-small" id="btnLoadSampleData" title="Isi form dengan contoh data lengkap">
+          <svg class="svg-icon" viewBox="0 0 24 24" style="color: var(--accent-orange);"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+          <span>Contoh Data</span>
+        </button>
+        <button class="btn-small" id="btnSaveDraft" title="Simpan ke browser">
+          <svg class="svg-icon" viewBox="0 0 24 24" style="color: var(--primary);"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+          <span>Simpan Draft</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Segmented View Switcher (Formulir vs Pratinjau Surat) -->
+    <div class="mobile-view-switcher">
+      <button type="button" class="mobile-switch-btn active" id="btnMobileShowForm">
+        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        <span>Isi Formulir</span>
+      </button>
+      <button type="button" class="mobile-switch-btn" id="btnMobileShowPreview">
+        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+        <span>Pratinjau Surat A4</span>
+      </button>
+    </div>
+
+    <!-- 2-Column Split Layout -->
+    <div class="builder-workspace" id="builderWorkspace">
+      
+      <!-- LEFT COLUMN: 3-Stage Segmented Form Wizard -->
+      <div class="builder-form-col" id="builderFormCol">
+        
+        <!-- Apple / Samsung Segmented Step Controller -->
+        <div class="step-segmented-track">
+          <button class="step-segment-btn active" data-step="1">
+            <span class="tab-num">1</span>
+            <span>Data Diri & Kantor</span>
+          </button>
+          <button class="step-segment-btn" data-step="2">
+            <span class="tab-num">2</span>
+            <span>Waktu & Alasan</span>
+          </button>
+          <button class="step-segment-btn" data-step="3">
+            <span class="tab-num">3</span>
+            <span>Tanda Tangan</span>
+          </button>
+        </div>
+
+        <!-- Form Card Container -->
+        <div class="form-card">
+          
+          <!-- TAHAP 1: DATA DIRI & KANTOR -->
+          <div class="form-step-panel active" id="stepPanel1">
+            <div class="panel-header">
+              <div>
+                <h3 class="panel-title">Tahap 1: Data Diri & Kantor</h3>
+                <p class="panel-subtitle">Masukkan identitas Anda dan pihak perusahaan yang dituju.</p>
+              </div>
+            </div>
+
+            <!-- Group: Data Diri Karyawan -->
+            <div class="form-group-section">
+              <div class="section-subhead">Identitas Karyawan</div>
+              
+              <div class="form-group">
+                <label class="form-label" for="inputFullName">Nama Lengkap *</label>
+                <input type="text" id="inputFullName" class="form-input" placeholder="Masukkan nama lengkap Anda" value="Ahmad Rizky Pratama">
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label class="form-label" for="inputJobTitle">Jabatan / Posisi *</label>
+                  <input type="text" id="inputJobTitle" class="form-input" placeholder="Contoh: Senior Product Designer" value="Senior Product Designer">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="inputDepartment">
+                    <span>Departemen</span>
+                    <span class="badge-opt">Opsional</span>
+                  </label>
+                  <input type="text" id="inputDepartment" class="form-input" placeholder="Contoh: Product Design" value="Product & Experience Design">
+                </div>
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label class="form-label" for="inputEmployeeId">
+                    <span>NIK / ID Karyawan</span>
+                    <span class="badge-opt">Opsional</span>
+                  </label>
+                  <input type="text" id="inputEmployeeId" class="form-input" placeholder="Contoh: EMP-2023-08819" value="EMP-2023-08819">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="inputCity">Kota Domisili Surat *</label>
+                  <input type="text" id="inputCity" class="form-input" placeholder="Contoh: Jakarta" value="Jakarta">
+                </div>
+              </div>
+            </div>
+
+            <!-- Group: Pihak Perusahaan -->
+            <div class="form-group-section">
+              <div class="section-subhead">Pihak Perusahaan yang Dituju</div>
+
+              <div class="form-group">
+                <label class="form-label" for="inputCompanyName">Nama Perusahaan *</label>
+                <input type="text" id="inputCompanyName" class="form-input" placeholder="Contoh: PT Teknologi Maju Sejahtera" value="PT Teknologi Maju Sejahtera">
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label class="form-label" for="inputManagerName">Nama Atasan / Pihak HR</label>
+                  <input type="text" id="inputManagerName" class="form-input" placeholder="Contoh: Dewi Anggraini" value="Dewi Anggraini">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="inputRecipientPosition">Jabatan Penerima</label>
+                  <input type="text" id="inputRecipientPosition" class="form-input" placeholder="Contoh: Head of People" value="Head of People">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="inputCompanyAddress">Alamat Perusahaan</label>
+                <input type="text" id="inputCompanyAddress" class="form-input" placeholder="Contoh: SCBD Lot 8, Jakarta Selatan" value="SCBD Lot 8, Jakarta Selatan">
+              </div>
+            </div>
+          </div>
+
+          <!-- TAHAP 2: WAKTU & ALASAN -->
+          <div class="form-step-panel" id="stepPanel2">
+            <div class="panel-header">
+              <div>
+                <h3 class="panel-title">Tahap 2: Waktu & Alasan</h3>
+                <p class="panel-subtitle">Tentukan tanggal surat, hari kerja terakhir, dan alasan resign.</p>
+              </div>
+            </div>
+
+            <div class="form-group-section">
+              <div class="section-subhead">Jadwal & Masa Transisi</div>
+
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label class="form-label" for="inputLetterDate">Tanggal Surat *</label>
+                  <input type="date" id="inputLetterDate" class="form-input">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="inputLwdDate">Hari Kerja Terakhir (LWD) *</label>
+                  <input type="date" id="inputLwdDate" class="form-input">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Pilihan Cepat Notice Period</label>
+                <div class="notice-presets">
+                  <button type="button" class="preset-btn active" data-notice="30">1 Bulan (30 Hari)</button>
+                  <button type="button" class="preset-btn" data-notice="14">2 Minggu (14 Hari)</button>
+                  <button type="button" class="preset-btn" data-notice="0">Immediate</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group-section">
+              <div class="section-subhead">Alasan Pengunduran Diri</div>
+
+              <div class="form-group">
+                <label class="form-label" for="selectReason">Pilih Alasan Formal</label>
+                <select id="selectReason" class="form-select">
+                  <option value="melanjutkan jenjang karier dan tantangan profesional baru">Pengembangan Karier & Tantangan Baru</option>
+                  <option value="melanjutkan pendidikan ke jenjang yang lebih tinggi">Melanjutkan Pendidikan</option>
+                  <option value="alasan keluarga dan komitmen personal">Alasan Personal & Keluarga</option>
+                  <option value="perubahan fokus dan haluan industri karier">Perubahan Bidang Karier</option>
+                  <option value="kondisi kesehatan yang memerlukan pemulihan">Fokus Pemulihan Kesehatan</option>
+                  <option value="custom">Tulis Alasan Kustom Sendiri...</option>
+                </select>
+              </div>
+
+              <div class="form-group" id="customReasonGroup" style="display: none;">
+                <label class="form-label" for="inputCustomReason">Alasan Kustom</label>
+                <textarea id="inputCustomReason" class="form-textarea" placeholder="Tuliskan alasan pengunduran diri secara sopan..."></textarea>
+              </div>
+
+              <div class="checkbox-container">
+                <input type="checkbox" id="checkNoReason" class="custom-checkbox">
+                <label for="checkNoReason" class="checkbox-label">
+                  Tanpa mencantumkan alasan spesifik di dalam surat
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group-section">
+              <div class="section-subhead">Komitmen Transisi & Handover</div>
+              <div class="form-group">
+                <label class="form-label" for="inputAdditionalNotes">
+                  <span>Catatan Tambahan</span>
+                  <span class="badge-opt">Opsional</span>
+                </label>
+                <textarea id="inputAdditionalNotes" class="form-textarea" placeholder="Contoh: Saya berkomitmen untuk membantu proses serah terima (handover) pekerjaan kepada rekan tim selama masa transisi."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAHAP 3: TANDA TANGAN & LOGO -->
+          <div class="form-step-panel" id="stepPanel3">
+            <div class="panel-header">
+              <div>
+                <h3 class="panel-title">Tahap 3: Tanda Tangan & Kop Surat</h3>
+                <p class="panel-subtitle">Goreskan tanda tangan digital dan pilih gaya dokumen Anda.</p>
+              </div>
+            </div>
+
+            <!-- Signature Canvas Section -->
+            <div class="form-group-section">
+              <div class="section-subhead">Tanda Tangan Digital</div>
+              
+              <div class="signature-box-container">
+                <div class="sig-header-bar">
+                  <span class="sig-badge-label">Goreskan di bawah</span>
+                  <button type="button" id="btnClearSig" class="btn-text-action">
+                    Hapus Coretan
+                  </button>
+                </div>
+
+                <div class="sig-canvas-wrapper" id="sigWrapper">
+                  <canvas id="signatureCanvas"></canvas>
+                  <div class="canvas-touch-hint">Tanda tangan dengan jari atau mouse</div>
+                </div>
+
+                <div class="sig-actions">
+                  <div class="sig-buttons-row">
+                    <button type="button" class="btn-small" id="btnUseSampleSig">
+                      <svg class="svg-icon" viewBox="0 0 24 24" style="color: var(--primary);"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"/></svg>
+                      <span>Contoh Paraf</span>
+                    </button>
+                    <input type="file" id="sigFileInput" accept="image/png, image/jpeg" style="display: none;">
+                    <button type="button" class="btn-small" id="btnUploadSigFile">
+                      <svg class="svg-icon" viewBox="0 0 24 24" style="color: var(--accent-cyan);"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
+                      <span>Unggah Gambar Tanda Tangan</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Optional Company Logo Upload -->
+            <div class="form-group-section">
+              <div class="section-subhead">Kop Surat / Logo (Opsional)</div>
+              
+              <div class="logo-upload-box">
+                <div class="logo-info-group">
+                  <div class="logo-preview-thumb" id="logoPreviewBox">
+                    <img id="logoThumbImg" src="" alt="Company Logo" style="display: none;">
+                    <span id="logoNoThumbIcon">No Logo</span>
+                  </div>
+                  <div>
+                    <div class="logo-file-title" id="logoFileName">Belum ada logo (Opsional)</div>
+                    <div class="logo-file-desc">Hanya ditampilkan di kop surat jika Anda mengunggahnya</div>
+                  </div>
+                </div>
+
+                <div class="logo-btn-group">
+                  <input type="file" id="logoFileInput" accept="image/*" style="display: none;">
+                  <button type="button" class="btn-small" id="btnUploadLogo">
+                    <svg class="svg-icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                    <span>Unggah Logo</span>
+                  </button>
+                  <button type="button" class="btn-small btn-remove-danger" id="btnRemoveLogo" style="display: none;">
+                    <svg class="svg-icon" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                    <span>Hapus</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Template Selector (Inside Step 3) -->
+            <div class="form-group-section">
+              <div class="section-subhead">Pilih Format Desain</div>
+              <div class="template-selector-track">
+                <button type="button" class="template-pill-btn active" data-template="modern">
+                  <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.28 19.65 10.59 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9z"/></svg>
+                  <span>Modern</span>
+                </button>
+                <button type="button" class="template-pill-btn" data-template="classic">
+                  <svg class="svg-icon" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                  <span>Klasik</span>
+                </button>
+                <button type="button" class="template-pill-btn" data-template="clean">
+                  <svg class="svg-icon" viewBox="0 0 24 24"><path d="M15 15H3v2h12v-2zm0-8H3v2h12V7zM3 13h18v-2H3v2zm0 8h18v-2H3v2zM3 3v2h18V3H3z"/></svg>
+                  <span>Clean</span>
+                </button>
+              </div>
+
+              <!-- 4 Gradient Choices for Modern Template -->
+              <div class="modern-gradient-options" id="modernGradientOptions">
+                <div class="gradient-options-label">
+                  <span>Pilihan Warna Garis Aksen:</span>
+                  <span class="gradient-name-active" id="activeGradientName">Sunset Rose</span>
+                </div>
+                <div class="gradient-swatches-grid">
+                  <button type="button" class="gradient-swatch-btn active" data-gradient="sunset" data-name="Sunset Rose" title="Sunset Rose (Pink ke Oranye)">
+                    <span class="swatch-preview swatch-sunset"></span>
+                    <span class="swatch-title">Sunset Rose</span>
+                  </button>
+                  <button type="button" class="gradient-swatch-btn" data-gradient="ocean" data-name="Ocean Cyan" title="Ocean Cyan (Biru ke Cyan)">
+                    <span class="swatch-preview swatch-ocean"></span>
+                    <span class="swatch-title">Ocean Cyan</span>
+                  </button>
+                  <button type="button" class="gradient-swatch-btn" data-gradient="emerald" data-name="Emerald Mint" title="Emerald Mint (Hijau ke Mint)">
+                    <span class="swatch-preview swatch-emerald"></span>
+                    <span class="swatch-title">Emerald Mint</span>
+                  </button>
+                  <button type="button" class="gradient-swatch-btn" data-gradient="violet" data-name="Royal Violet" title="Royal Violet (Indigo ke Ungu)">
+                    <span class="swatch-preview swatch-violet"></span>
+                    <span class="swatch-title">Royal Violet</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Navigation Action Bar (Step Progression) -->
+          <div class="form-nav-actions">
+            <button type="button" class="btn-secondary btn-step-back" id="btnPrevStep" style="display: none;">
+              <svg class="svg-icon" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+              <span>Sebelumnya</span>
+            </button>
+            <button type="button" class="btn-primary btn-step-next" id="btnNextStep">
+              <span>Lanjut: Tahap 2</span>
+              <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN: Realtime Live A4 Document Preview (1 Lembar Pas) -->
+      <div class="builder-preview-col" id="builderPreviewCol">
+        
+        <!-- Preview Actions Toolbar -->
+        <div class="preview-toolbar">
+          <div class="preview-toolbar-title">
+            <svg class="svg-icon" viewBox="0 0 24 24" style="color: var(--primary);"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+            <span>Pratinjau Pas 1 Lembar A4</span>
+          </div>
+
+          <div class="preview-actions">
+            <button type="button" class="btn-small" id="btnCopyText" title="Salin seluruh isi teks surat">
+              <svg class="svg-icon" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+              <span>Salin</span>
+            </button>
+            <button type="button" class="btn-small" id="btnPrintLetter" title="Cetak dokumen">
+              <svg class="svg-icon" viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+              <span>Cetak</span>
+            </button>
+            <button type="button" class="btn-primary btn-download-pdf" id="btnDownloadPdf">
+              <svg class="svg-icon" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+              <span>Download PDF</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- A4 Paper Stage (Exact Single-Page Sheet) -->
+        <div class="a4-paper-stage">
+          <div class="a4-document-sheet template-modern" id="a4Document">
+            
+            <!-- Letterhead -->
+            <div class="doc-letterhead">
+              <div class="doc-kop-text">
+                <div class="doc-company-name" id="docHeaderCompany">PT TEKNOLOGI MAJU SEJAHTERA</div>
+                <div class="doc-company-address" id="docHeaderAddress">SCBD Lot 8, Jakarta Selatan</div>
+              </div>
+              <div id="docLogoWrapper" style="display: none;">
+                <img id="docLogoImg" src="" alt="Company Logo" class="doc-logo-img">
+              </div>
+            </div>
+
+            <!-- Date & Place -->
+            <div class="doc-date-location">
+              <span id="docLocation">Jakarta</span>, <span id="docFormattedDate">28 September 2026</span>
+            </div>
+
+            <!-- Recipient Block -->
+            <div class="doc-recipient">
+              <p>Kepada Yth.</p>
+              <p><strong id="docManager">Dewi Anggraini (Head of People)</strong></p>
+              <p id="docCompany">PT Teknologi Maju Sejahtera</p>
+              <p id="docAddress">SCBD Lot 8, Jakarta Selatan</p>
+            </div>
+
+            <!-- Subject -->
+            <div class="doc-subject">
+              Perihal: Surat Permohonan Pengunduran Diri (Resignation)
+            </div>
+
+            <!-- Body Paragraphs (Optimized single-page spacing) -->
+            <div class="doc-body-paragraphs">
+              <p>Dengan hormat,</p>
+              
+              <p>Melalui surat ini, saya yang bertanda tangan di bawah ini:</p>
+
+              <div class="doc-details-table">
+                <div class="table-row"><span class="table-key">Nama</span><span class="table-colon">:</span><strong class="table-val" id="docBodyName">Ahmad Rizky Pratama</strong></div>
+                <div class="table-row"><span class="table-key">Jabatan</span><span class="table-colon">:</span><span class="table-val" id="docBodyRole">Senior Product Designer</span></div>
+                <div class="table-row"><span class="table-key">Departemen</span><span class="table-colon">:</span><span class="table-val" id="docBodyDept">Product & Experience Design</span></div>
+                <div class="table-row" id="docBodyIdRow"><span class="table-key">NIK / ID</span><span class="table-colon">:</span><span class="table-val" id="docBodyId">EMP-2023-08819</span></div>
+              </div>
+
+              <p id="docMainResignPara">
+                Bermaksud untuk mengajukan permohonan pengunduran diri dari posisi <strong id="docRoleRepeat">Senior Product Designer</strong> di <strong id="docCompanyRepeat">PT Teknologi Maju Sejahtera</strong>, terhitung efektif mulai tanggal <strong id="docEffectiveDate">28 Oktober 2026</strong><span id="docReasonText"> sehubungan dengan melanjutkan jenjang karier dan tantangan profesional baru</span>.
+              </p>
+
+              <p>
+                Saya mengucapkan terima kasih yang sebesar-besarnya atas kesempatan, bimbingan, serta pengalaman berharga yang telah diberikan kepada saya selama bekerja di perusahaan ini. Saya juga memohon maaf yang tulus atas segala kekhilafan dan kekurangan selama saya menjalankan tugas.
+              </p>
+
+              <p id="docAdditionalNotesPara">
+                Saya berkomitmen penuh untuk menyelesaikan seluruh tanggung jawab serta membantu proses transisi dan serah terima (handover) pekerjaan sebelum hari kerja terakhir saya.
+              </p>
+
+              <p>
+                Demikian surat pengunduran diri ini saya sampaikan dengan penuh kesadaran dan tanpa paksaan dari pihak mana pun. Atas perhatian dan pengertian Bapak/Ibu, saya ucapkan terima kasih.
+              </p>
+            </div>
+
+            <!-- Signature Block -->
+            <div class="doc-signature-block">
+              <p>Hormat saya,</p>
+              <div id="docSignatureWrapper">
+                <img id="docSigImg" src="" alt="Tanda Tangan" class="doc-sig-img" style="display: none;">
+                <div id="docSigPlaceholder" class="doc-sig-placeholder">
+                  (Tanda Tangan Digital)
+                </div>
+              </div>
+              <div class="doc-sig-name" id="docSigName">Ahmad Rizky Pratama</div>
+              <div class="doc-sig-title" id="docSigTitle">Senior Product Designer</div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Success Download Modal -->
+  <div class="modal-backdrop" id="successModal">
+    <div class="modal-card">
+      <div class="modal-success-icon">
+        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+      </div>
+      <h3 class="modal-title">Surat Berhasil Diunduh</h3>
+      <p class="modal-desc">
+        Dokumen PDF resmi 1 lembar A4 Anda telah berhasil dibuat dan disimpan di folder unduhan. Semoga sukses untuk langkah karier selanjutnya!
+      </p>
+      <button class="btn-primary btn-modal-close" id="btnCloseSuccessModal">
+        <span>Selesai & Tutup</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-msg" id="toastMsg">
+    <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+    <span id="toastText">Perubahan disimpan</span>
+  </div>
+
+  <!-- Site Footer (Minimal & Elegant) -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <img src="assets/logo.png" alt="Sorryye Logo" class="footer-logo">
+        <p class="footer-tagline">Generator surat pengunduran diri profesional yang cepat, rapi, dan terstandar.</p>
+      </div>
+      <div class="footer-links-group">
+        <a href="#home" class="footer-link">Beranda</a>
+        <a href="#how-it-works" class="footer-link">3 Tahap</a>
+        <a href="#templates" class="footer-link">Gaya Dokumen</a>
+        <a href="#faq" class="footer-link">Tanya Jawab</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Sorryye. Pas 1 Lembar A4 • 100% Bebas Watermark.</span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

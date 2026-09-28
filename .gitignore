@@ -1,0 +1,9 @@
+# Dependencies & tools
+node_modules/
+.system_generated/
+stitch_downloads/
+scratch/
+
+# OS files
+.DS_Store
+Thumbs.db
