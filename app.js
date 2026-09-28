@@ -1045,7 +1045,32 @@ function initApp() {
   const heroVideo = document.getElementById('heroFullVideo') || document.getElementById('heroLoopVideo');
   if (heroVideo) {
     heroVideo.muted = true;
-    heroVideo.play().catch(() => {});
+    heroVideo.defaultMuted = true;
+    heroVideo.setAttribute('muted', '');
+    heroVideo.setAttribute('playsinline', '');
+
+    const tryPlayVideo = () => {
+      const p = heroVideo.play();
+      if (p !== undefined) {
+        p.catch(() => {
+          // If browser policy blocks autoplay, play on first user interaction
+          const resumeOnInteract = () => {
+            heroVideo.play().catch(() => {});
+            window.removeEventListener('click', resumeOnInteract);
+            window.removeEventListener('touchstart', resumeOnInteract);
+          };
+          window.addEventListener('click', resumeOnInteract, { once: true });
+          window.addEventListener('touchstart', resumeOnInteract, { once: true });
+        });
+      }
+    };
+
+    if (heroVideo.readyState >= 2) {
+      tryPlayVideo();
+    } else {
+      heroVideo.addEventListener('loadeddata', tryPlayVideo, { once: true });
+      heroVideo.addEventListener('canplay', tryPlayVideo, { once: true });
+    }
   }
 }
 
