@@ -211,6 +211,7 @@ function switchView(viewName) {
     elements.builderView.classList.add('active');
     window.location.hash = '#builder';
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    setMobileMode('form');
     initSignatureCanvas();
   } else {
     document.body.classList.remove('builder-active');
@@ -268,18 +269,26 @@ function goToStep(stepNumber) {
   }
 
   // Next button text
-  const stepLabels = [
+  const isMobile = window.innerWidth <= 768;
+  const stepLabelsDesktop = [
     'Lanjut: Tahap 2 (Waktu & Alasan)',
     'Lanjut: Tahap 3 (Tanda Tangan)',
     'Download PDF (Pas 1 Lembar A4)'
   ];
+  const stepLabelsMobile = [
+    'Lanjut: Waktu & Alasan',
+    'Lanjut: TTD & Desain',
+    'Unduh PDF A4 Resmi'
+  ];
+  const currentLabels = isMobile ? stepLabelsMobile : stepLabelsDesktop;
+
   elements.btnNextStep.innerHTML = `
-    <span>${stepLabels[stepNumber - 1]}</span>
+    <span>${currentLabels[stepNumber - 1]}</span>
     <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
   `;
 
   if (stepNumber === 3) {
-    setTimeout(initSignatureCanvas, 100);
+    setTimeout(initSignatureCanvas, 120);
   }
 }
 
