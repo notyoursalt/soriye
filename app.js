@@ -9,19 +9,19 @@ const state = {
   currentTemplate: 'modern', // 'modern', 'classic', 'clean'
   currentView: 'landing', // 'landing', 'builder'
   mobileMode: 'form', // 'form', 'preview'
-  
+
   // TAHAP 1: DATA DIRI & KANTOR
   fullName: 'Ahmad Rizky Pratama',
   jobTitle: 'Senior Product Designer',
   department: 'Product & Experience Design',
   employeeId: 'EMP-2023-08819',
   city: 'Jakarta',
-  
+
   companyName: 'PT Teknologi Maju Sejahtera',
   managerName: 'Dewi Anggraini',
   recipientPosition: 'Head of People',
   companyAddress: 'SCBD Lot 8, Jakarta Selatan',
-  
+
   // TAHAP 2: WAKTU & ALASAN
   letterDate: '',
   lwdDate: '',
@@ -30,7 +30,7 @@ const state = {
   customReason: '',
   hideReason: false,
   additionalNotes: 'Saya berkomitmen penuh untuk menyelesaikan seluruh tanggung jawab serta membantu proses transisi dan serah terima (handover) pekerjaan sebelum hari kerja terakhir saya.',
-  
+
   // TAHAP 3: TANDA TANGAN & LOGO
   logoUrl: null,
   hasCustomLogo: false,
@@ -85,7 +85,7 @@ const elements = {
   navLinkHow: document.getElementById('navLinkHow'),
   navLinkTemplates: document.getElementById('navLinkTemplates'),
   navLinkFaq: document.getElementById('navLinkFaq'),
-  
+
   // Buttons
   btnNavCreate: document.getElementById('btnNavCreate'),
   btnHeroCreate: document.getElementById('btnHeroCreate'),
@@ -94,12 +94,12 @@ const elements = {
   btnBackToHome: document.getElementById('btnBackToHome'),
   btnLoadSampleData: document.getElementById('btnLoadSampleData'),
   btnSaveDraft: document.getElementById('btnSaveDraft'),
-  
+
   // Mobile View Switcher
   btnMobileShowForm: document.getElementById('btnMobileShowForm'),
   btnMobileShowPreview: document.getElementById('btnMobileShowPreview'),
   builderWorkspace: document.getElementById('builderWorkspace'),
-  
+
   // 3-Stage Segmented Wizard
   stepSegmentBtns: document.querySelectorAll('.step-segment-btn'),
   stepPanels: [
@@ -109,7 +109,7 @@ const elements = {
   ],
   btnPrevStep: document.getElementById('btnPrevStep'),
   btnNextStep: document.getElementById('btnNextStep'),
-  
+
   // Tahap 1: Data Diri & Kantor
   inputFullName: document.getElementById('inputFullName'),
   inputJobTitle: document.getElementById('inputJobTitle'),
@@ -120,7 +120,7 @@ const elements = {
   inputManagerName: document.getElementById('inputManagerName'),
   inputRecipientPosition: document.getElementById('inputRecipientPosition'),
   inputCompanyAddress: document.getElementById('inputCompanyAddress'),
-  
+
   // Tahap 2: Waktu & Alasan
   inputLetterDate: document.getElementById('inputLetterDate'),
   inputLwdDate: document.getElementById('inputLwdDate'),
@@ -130,7 +130,7 @@ const elements = {
   inputCustomReason: document.getElementById('inputCustomReason'),
   checkNoReason: document.getElementById('checkNoReason'),
   inputAdditionalNotes: document.getElementById('inputAdditionalNotes'),
-  
+
   // Tahap 3: Tanda Tangan & Logo
   logoThumbImg: document.getElementById('logoThumbImg'),
   logoNoThumbIcon: document.getElementById('logoNoThumbIcon'),
@@ -138,21 +138,21 @@ const elements = {
   logoFileInput: document.getElementById('logoFileInput'),
   btnUploadLogo: document.getElementById('btnUploadLogo'),
   btnRemoveLogo: document.getElementById('btnRemoveLogo'),
-  
+
   signatureCanvas: document.getElementById('signatureCanvas'),
   sigWrapper: document.getElementById('sigWrapper'),
   btnClearSig: document.getElementById('btnClearSig'),
   btnUseSampleSig: document.getElementById('btnUseSampleSig'),
   sigFileInput: document.getElementById('sigFileInput'),
   btnUploadSigFile: document.getElementById('btnUploadSigFile'),
-  
+
   // Template Selectors
   templatePillBtns: document.querySelectorAll('.template-pill-btn'),
   templateCardPreviews: document.querySelectorAll('.template-choice-card'),
   modernGradientOptions: document.getElementById('modernGradientOptions'),
   activeGradientName: document.getElementById('activeGradientName'),
   gradientSwatchBtns: document.querySelectorAll('.gradient-swatch-btn'),
-  
+
   // A4 Document Elements (1 Lembar Pas)
   a4Document: document.getElementById('a4Document'),
   docHeaderCompany: document.getElementById('docHeaderCompany'),
@@ -178,12 +178,12 @@ const elements = {
   docSigPlaceholder: document.getElementById('docSigPlaceholder'),
   docSigName: document.getElementById('docSigName'),
   docSigTitle: document.getElementById('docSigTitle'),
-  
+
   // Actions Toolbar
   btnCopyText: document.getElementById('btnCopyText'),
   btnPrintLetter: document.getElementById('btnPrintLetter'),
   btnDownloadPdf: document.getElementById('btnDownloadPdf'),
-  
+
   // Modals & Toast
   successModal: document.getElementById('successModal'),
   btnCloseSuccessModal: document.getElementById('btnCloseSuccessModal'),
@@ -316,7 +316,7 @@ function setModernGradient(gradientKey) {
 // Template Switcher
 function setTemplate(templateName) {
   state.currentTemplate = templateName;
-  
+
   elements.templatePillBtns.forEach(btn => {
     if (btn.dataset.template === templateName) {
       btn.classList.add('active');
@@ -342,7 +342,7 @@ function setTemplate(templateName) {
 function renderDocument() {
   elements.docHeaderCompany.textContent = state.companyName || 'NAMA PERUSAHAAN';
   elements.docHeaderAddress.textContent = state.companyAddress || 'Alamat Kantor';
-  
+
   // Logo: ONLY shown if explicitly uploaded
   if (state.hasCustomLogo && state.logoUrl) {
     elements.docLogoImg.src = state.logoUrl;
@@ -366,7 +366,7 @@ function renderDocument() {
   elements.docBodyName.textContent = state.fullName || 'Nama Karyawan';
   elements.docBodyRole.textContent = state.jobTitle || 'Jabatan';
   elements.docBodyDept.textContent = state.department || 'Departemen';
-  
+
   if (state.employeeId && state.employeeId.trim()) {
     elements.docBodyId.textContent = state.employeeId;
     elements.docBodyIdRow.style.display = 'flex';
@@ -571,7 +571,7 @@ function setupLogoUploader() {
 function setupSignatureControls() {
   const canvas = elements.signatureCanvas;
   if (!canvas) return;
-  
+
   canvas.addEventListener('mousedown', startDrawing);
   canvas.addEventListener('mousemove', draw);
   canvas.addEventListener('mouseup', stopDrawing);
@@ -797,7 +797,7 @@ function loadSampleData() {
   state.logoUrl = null;
   state.hasCustomLogo = false;
   state.modernGradient = 'sunset';
-  
+
   if (elements.logoThumbImg) {
     elements.logoThumbImg.src = '';
     elements.logoThumbImg.style.display = 'none';
@@ -838,7 +838,7 @@ function saveDraft() {
   try {
     localStorage.setItem('sorryye_draft_v3', JSON.stringify(state));
     showToast('Draft disimpan di browser!');
-  } catch(e) {
+  } catch (e) {
     showToast('Gagal menyimpan draft.');
   }
 }
@@ -849,7 +849,7 @@ function loadDraftIfAvailable() {
     if (saved) {
       const parsed = JSON.parse(saved);
       Object.assign(state, parsed);
-      
+
       if (elements.inputFullName) elements.inputFullName.value = state.fullName || '';
       if (elements.inputJobTitle) elements.inputJobTitle.value = state.jobTitle || '';
       if (elements.inputDepartment) elements.inputDepartment.value = state.department || '';
@@ -864,19 +864,19 @@ function loadDraftIfAvailable() {
       if (elements.inputAdditionalNotes) elements.inputAdditionalNotes.value = state.additionalNotes || '';
       if (elements.selectReason) elements.selectReason.value = state.reason || '';
       if (elements.checkNoReason) elements.checkNoReason.checked = !!state.hideReason;
-      
+
       if (state.logoUrl === 'assets/logo.png') {
         state.logoUrl = null;
         state.hasCustomLogo = false;
       }
-      
+
       setModernGradient(state.modernGradient || 'sunset');
       setTemplate(state.currentTemplate || 'modern');
       renderDocument();
     } else {
       loadSampleData();
     }
-  } catch(e) {
+  } catch (e) {
     loadSampleData();
   }
 }
@@ -886,7 +886,7 @@ function copyLetterText() {
   const dateFormatted = formatDateIndo(state.letterDate) || formatDateIndo(getTodayString());
   const effectiveFormatted = formatDateIndo(state.lwdDate) || 'tanggal yang ditentukan';
   const managerStr = state.managerName ? `${state.managerName}${state.recipientPosition ? ` (${state.recipientPosition})` : ''}` : 'HRD / Management';
-  
+
   let reasonPart = '';
   if (!state.hideReason) {
     const reasonText = state.reason === 'custom' ? state.customReason : state.reason;
@@ -940,17 +940,17 @@ async function downloadPdf() {
     margin: [6, 6, 6, 6],
     filename: filename,
     image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { 
-      scale: 2, 
-      useCORS: true, 
+    html2canvas: {
+      scale: 2,
+      useCORS: true,
       logging: false,
       letterRendering: true,
       windowWidth: 1200
     },
-    jsPDF: { 
-      unit: 'mm', 
-      format: 'a4', 
-      orientation: 'portrait' 
+    jsPDF: {
+      unit: 'mm',
+      format: 'a4',
+      orientation: 'portrait'
     }
   };
 
@@ -969,7 +969,7 @@ async function downloadPdf() {
     if (elements.successModal) {
       elements.successModal.classList.add('active');
     }
-  } catch(err) {
+  } catch (err) {
     console.error('PDF Generation Error:', err);
     window.print();
   }
@@ -1031,46 +1031,21 @@ function initApp() {
   }
 
   loadDraftIfAvailable();
-  
+
   if (!state.letterDate) {
     state.letterDate = getTodayString();
     if (elements.inputLetterDate) elements.inputLetterDate.value = state.letterDate;
     state.lwdDate = addDaysToDateString(state.letterDate, 30);
     if (elements.inputLwdDate) elements.inputLwdDate.value = state.lwdDate;
   }
-  
+
   renderDocument();
 
   // Ensure hero video loops and autoplays smoothly
   const heroVideo = document.getElementById('heroFullVideo') || document.getElementById('heroLoopVideo');
   if (heroVideo) {
     heroVideo.muted = true;
-    heroVideo.defaultMuted = true;
-    heroVideo.setAttribute('muted', '');
-    heroVideo.setAttribute('playsinline', '');
-
-    const tryPlayVideo = () => {
-      const p = heroVideo.play();
-      if (p !== undefined) {
-        p.catch(() => {
-          // If browser policy blocks autoplay, play on first user interaction
-          const resumeOnInteract = () => {
-            heroVideo.play().catch(() => {});
-            window.removeEventListener('click', resumeOnInteract);
-            window.removeEventListener('touchstart', resumeOnInteract);
-          };
-          window.addEventListener('click', resumeOnInteract, { once: true });
-          window.addEventListener('touchstart', resumeOnInteract, { once: true });
-        });
-      }
-    };
-
-    if (heroVideo.readyState >= 2) {
-      tryPlayVideo();
-    } else {
-      heroVideo.addEventListener('loadeddata', tryPlayVideo, { once: true });
-      heroVideo.addEventListener('canplay', tryPlayVideo, { once: true });
-    }
+    heroVideo.play().catch(() => { });
   }
 }
 

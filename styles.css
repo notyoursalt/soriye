@@ -1373,7 +1373,7 @@ body.builder-active .site-header {
 }
 
 /* ===================================================
-   RESPONSIVE & MOBILE ERGONOMICS (Samsung / Apple Mobile)
+   RESPONSIVE & MOBILE ERGONOMICS (Apple iOS & Samsung One UI Standard)
 =================================================== */
 @media (max-width: 1024px) {
   .hero-clean-container {
@@ -1392,93 +1392,316 @@ body.builder-active .site-header {
 }
 
 @media (max-width: 768px) {
+  /* Prevent horizontal leaking on small screens */
+  html, body {
+    overflow-x: hidden !important;
+    width: 100vw;
+    max-width: 100vw;
+  }
+
+  /* 1. Header: Apple Notch & Dynamic Island Safe Area */
   .site-header {
-    height: 72px;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+    height: calc(62px + env(safe-area-inset-top, 0px));
+    padding-top: env(safe-area-inset-top, 0px);
+    border-bottom-left-radius: 18px;
+    border-bottom-right-radius: 18px;
+    box-shadow: 0 4px 16px rgba(20, 18, 30, 0.04);
+  }
+  .nav-container {
+    padding: 0 16px;
+    gap: 10px;
   }
   .brand-logo img {
-    height: 44px;
+    height: 38px;
   }
   .nav-menu {
     display: none;
   }
   .btn-nav-cta {
-    padding: 8px 14px;
-    font-size: 13px;
+    padding: 7px 13px;
+    font-size: 12px;
+    gap: 5px;
+    border-radius: var(--radius-sm);
   }
+  .btn-nav-cta .svg-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* 2. Hero Landing Page: Ergonomic Mobile Hierarchy */
   .hero-fullwidth-view {
-    height: auto;
+    height: 100vh;
     min-height: 100vh;
-    padding-top: 80px;
-    padding-bottom: 40px;
-    align-items: flex-start;
+    min-height: -webkit-fill-available;
+    width: 100vw;
+    max-width: 100vw;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+    display: none;
+    align-items: center;
+  }
+  .hero-fullwidth-view.active {
+    display: flex;
   }
   .hero-fullwidth-video {
-    opacity: 0.38;
-    object-position: 70% center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 100vh;
+    max-width: 100vw;
+    object-fit: cover !important;
+    object-position: 78% center !important;
+    opacity: 0.42;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .hero-fullwidth-overlay {
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: calc(72px + env(safe-area-inset-top, 0px)) 18px calc(24px + env(safe-area-inset-bottom, 0px));
+    background: linear-gradient(
+      180deg,
+      rgba(252, 245, 235, 0.90) 0%,
+      rgba(252, 245, 235, 0.72) 48%,
+      rgba(252, 245, 235, 0.90) 100%
+    );
   }
   .hero-overlay-inner {
-    padding: 20px 20px 0;
+    padding: 0;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .hero-left-content {
+    max-width: 100%;
+    gap: 13px;
+    align-items: center;
+    text-align: center;
+  }
+  .hero-badge-pill {
+    font-size: 11px;
+    padding: 4px 11px;
+    margin-bottom: 2px;
   }
   .hero-main-title {
-    font-size: 32px;
+    font-size: 28px;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
   }
   .hero-main-desc {
-    font-size: 15px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+  .hero-action-row {
+    width: 100%;
+    margin-top: 4px;
   }
   .btn-hero-cta {
     width: 100%;
+    padding: 13px 20px;
+    font-size: 14.5px;
+    justify-content: center;
   }
-  .builder-view {
-    padding: 84px 12px 60px;
+  .hero-feature-tags {
+    justify-content: center;
+    gap: 6px;
+    margin-top: 6px;
+    width: 100%;
   }
-  
-  /* Show Mobile View Switcher */
-  .mobile-view-switcher {
-    display: grid;
+  .feature-tag {
+    font-size: 11px;
+    padding: 4px 9px;
+    gap: 5px;
+  }
+  .feature-tag .svg-icon {
+    width: 12px;
+    height: 12px;
   }
 
-  /* When mobile switcher toggles */
+  /* 3. Builder Workspace Layout */
+  .builder-view {
+    padding: calc(72px + env(safe-area-inset-top, 0px)) 14px calc(48px + env(safe-area-inset-bottom, 0px));
+  }
+  .builder-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .builder-header-left {
+    width: 100%;
+    align-items: center;
+    gap: 10px;
+  }
+  .builder-main-title {
+    font-size: 18px;
+  }
+  .builder-main-subtitle {
+    font-size: 11.5px;
+    line-height: 1.4;
+  }
+  .builder-header-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    gap: 8px;
+  }
+  .builder-header-actions .btn-small {
+    justify-content: center;
+    padding: 8px 6px;
+    font-size: 12px;
+  }
+
+  /* Mobile View Switcher (Segmented Form vs A4) */
+  .mobile-view-switcher {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    background: #EAE2D8;
+    padding: 4px;
+    border-radius: var(--radius-md);
+    margin-bottom: 14px;
+  }
+  .mobile-switch-btn {
+    padding: 9px 8px;
+    font-size: 12px;
+    font-weight: 700;
+    gap: 6px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* View switcher states */
   .builder-workspace.show-preview-mode #builderFormCol {
     display: none;
   }
   .builder-workspace.show-form-mode #builderPreviewCol {
     display: none;
   }
+
+  /* Form Elements & Touch Targets */
+  .form-card {
+    padding: 18px 14px;
+    border-radius: var(--radius-lg);
+  }
+  .step-segmented-track {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    padding: 4px;
+    background: var(--surface-muted);
+    border-radius: var(--radius-md);
+    margin-bottom: 14px;
+  }
+  .step-segment-btn {
+    font-size: 10.5px;
+    padding: 8px 2px;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .step-segment-btn .tab-num {
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+  }
+  .form-group-section {
+    margin-bottom: 16px;
+  }
+  .section-subhead {
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+  .form-label {
+    font-size: 12px;
+    margin-bottom: 5px;
+  }
+  
+  /* CRITICAL FOR IPHONE: Font size >= 16px prevents iOS Safari auto-zoom glitch */
+  .form-input, .form-textarea, .form-select {
+    font-size: 16px !important;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+  }
   
   .form-row-2 {
     grid-template-columns: 1fr;
     gap: 10px;
   }
-  
-  .form-card {
-    padding: 18px 16px;
+
+  /* 4. Canvas Tanda Tangan */
+  .signature-pad-container {
+    width: 100%;
+    height: 160px;
   }
-  
+  .signature-canvas {
+    width: 100% !important;
+    height: 160px !important;
+    touch-action: none;
+  }
+  .signature-actions-row {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* 5. A4 Document Sheet & Paper Stage */
   .a4-paper-stage {
-    padding: 12px;
+    padding: 10px;
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    justify-content: flex-start;
   }
-  
   .a4-document-sheet {
-    padding: 24px 20px;
-    font-size: 11.5px;
+    min-width: 320px;
+    width: 100%;
+    max-width: 100%;
     height: auto;
-    min-height: 640px;
+    min-height: 560px;
     max-height: none;
-  }
-  
-  .step-segmented-track {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-  .step-segment-btn {
+    padding: 22px 16px;
     font-size: 11px;
-    padding: 8px 4px;
-    flex-direction: column;
-    gap: 2px;
+    line-height: 1.45;
   }
+  .preview-toolbar {
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+  }
+  .preview-toolbar-title {
+    font-size: 12px;
+  }
+  .btn-download-pdf {
+    padding: 7px 12px;
+    font-size: 12px;
+  }
+
   .gradient-swatches-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+}
+
+/* Extra Compact Devices (iPhone SE / iPhone Mini <= 380px) */
+@media (max-width: 380px) {
+  .hero-main-title {
+    font-size: 25px;
+  }
+  .hero-main-desc {
+    font-size: 13px;
+  }
+  .btn-hero-cta {
+    padding: 12px 16px;
+    font-size: 13.5px;
+  }
+  .step-segment-btn {
+    font-size: 9.5px;
   }
 }
 
